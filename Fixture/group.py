@@ -31,3 +31,12 @@ class GroupHelper:
         wd.find_element_by_link_text("group page").click()
         # for delay
         wd.find_element_by_name("new")
+
+    def del_first_group(self):
+        wd = self.app.wd
+        self.open_page_group()
+        # Select group
+        wd.find_element_by_name("selected[]").click()
+        # Delete selected group
+        wd.find_element_by_name("delete").click()
+        self.return_page_group()
