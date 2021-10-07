@@ -15,5 +15,5 @@ def app(request):
 def test_add_group(app):
     app.open_home_page()
     app.session.login(pwd="secret", login="admin")
-    app.create_group(Group(gname="test", gheader="test2", gfooter="test3"))
+    app.group.create(Group(gname="test", gheader="test2", gfooter="test3"))
     app.session.logout()
