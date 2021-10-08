@@ -32,7 +32,7 @@ class GroupHelper:
         # for delay
         wd.find_element_by_name("new")
 
-    def del_first_group(self):
+    def del_first(self):
         wd = self.app.wd
         self.open_page_group()
         # Select group
@@ -41,7 +41,7 @@ class GroupHelper:
         wd.find_element_by_name("delete").click()
         self.return_page_group()
 
-    def edit_first_group(self, group):
+    def edit_first(self, group):
         wd = self.app.wd
         self.open_page_group()
         # Select group
