@@ -61,3 +61,11 @@ class ContactHelper:
         # Delete selected contact
         wd.find_element_by_xpath("//input[@value='Delete']").click()
         self.app.open_home_page()
+
+    def del_all(self):
+        wd = self.app.wd
+        self.app.open_home_page()
+        wd.find_element_by_id("MassCB").click()
+        wd.find_element_by_xpath("//input[@value='Delete']").click()
+        wd.switch_to_alert().accept()
+        self.app.open_home_page()
