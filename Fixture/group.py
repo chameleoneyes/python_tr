@@ -50,7 +50,8 @@ class GroupHelper:
 
     def open_page_group(self):
         wd = self.app.wd
-        wd.find_element_by_link_text("groups").click()
+        if not (wd.current_url.endswith("/group.php") and wd.find_element_by_name("new")):
+            wd.find_element_by_link_text("groups").click()
 
     def return_page_group(self):
         wd = self.app.wd
