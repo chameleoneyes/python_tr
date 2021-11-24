@@ -11,14 +11,15 @@ def test_add_group(app):
     new_groups = app.group.get_group_list()
     assert len(old_groups) + 1 == len(new_groups)
     old_groups.append(group)
-
-    def gr_id_fill(gr):
-        if gr.id:
-            return int(gr.id)
-        else:
-            return maxsize
-    assert sorted(old_groups, key=gr_id_fill) == sorted(new_groups, key=gr_id_fill)
+    assert sorted(old_groups, key=Group.gr_id_fill) == sorted(new_groups, key=Group.gr_id_fill)
 
 
-#def test_add_empty_group(app):
-#    app.group.create(Group(gname="", gheader="", gfooter=""))
+def test_add_empty_group(app):
+    old_groups = app.group.get_group_list()
+    group = Group(gname="", gheader="", gfooter="")
+    app.group.create(group)
+    new_groups = app.group.get_group_list()
+    assert len(old_groups) + 1 == len(new_groups)
+    old_groups.append(group)
+    assert sorted(old_groups, key=Group.gr_id_fill) == sorted(new_groups, key=Group.gr_id_fill)
+
