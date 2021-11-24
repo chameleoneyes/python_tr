@@ -7,16 +7,15 @@ def test_del_first_contact_hp(app):
     if app.contact.count() == 0:
         app.contact.create(Contact(firstname="test_9"))
     old_contacts = app.contact.get_contact_list()
-    for i in range(len(old_contacts)):
-        print(str(old_contacts[i].id) + " : " + str(old_contacts[i].firstname))
-    print("New contacts")
-
     app.contact.del_first_from_home_page()
     time.sleep(2)       # for 1 assert
     new_contacts = app.contact.get_contact_list()
-    for i in range(len(new_contacts)):
-        print(str(new_contacts[i].id) + " : " + str(new_contacts[i].firstname))
+# Diagnostic output
+#    for i in range(len(new_contacts)):
+#        print(str(new_contacts[i].id) + " : " + str(new_contacts[i].firstname))
     assert len(old_contacts) - 1 == len(new_contacts)
+    old_contacts[0:1] = []
+    assert old_contacts == new_contacts
 
 
 

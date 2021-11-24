@@ -30,7 +30,7 @@ class ContactHelper:
         self.change_field_value("firstname", contact.firstname)
         self.change_field_value("lastname", contact.lastname)
         self.change_field_value("company", contact.company)
-        self.change_field_value("mobile", contact.mobile)
+        self.change_field_value("address", contact.addr)
 
     def change_field_value(self, field_name, text):
         wd = self.app.wd
@@ -78,9 +78,9 @@ class ContactHelper:
         self.app.open_home_page()
         contactlist = []
         for elements in wd.find_elements_by_name("entry"):
-#            text = elements.text
             id = elements.find_element_by_name("selected[]").get_attribute("value")
-#            firstname = elements.find_element_by_xpath("//input[@value='%s']/following-sibling:://td[3]" % str(id)).text
             firstname = elements.find_element_by_xpath(".//td[3]").text
-            contactlist.append(Contact(id=id, firstname=firstname))
+            lastname = elements.find_element_by_xpath(".//td[2]").text
+            addr = elements.find_element_by_xpath(".//td[4]").text
+            contactlist.append(Contact(id=id, firstname=firstname, lastname=lastname, addr=addr))
         return contactlist
