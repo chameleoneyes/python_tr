@@ -14,13 +14,13 @@ class ContactHelper:
         wd.find_element_by_link_text("home page").click()
         self.contact_cache = None
 
-    def edit_first(self, new_contact_params):
+    def edit_random(self, new_contact_params, index):
         wd = self.app.wd
         self.app.open_home_page()
         # Select contact
-        wd.find_element_by_name("selected[]").click()
+        wd.find_elements_by_name("selected[]")[index].click()
         # Edit selected contact
-        wd.find_element_by_xpath("//img[@alt='Edit']").click()
+        wd.find_elements_by_xpath("//img[@alt='Edit']")[index].click()
         self.fill_contact_form(new_contact_params)
         wd.find_element_by_name("update").click()
         wd.find_element_by_link_text("home page").click()
@@ -40,11 +40,13 @@ class ContactHelper:
             wd.find_element_by_name(field_name).clear()
             wd.find_element_by_name(field_name).send_keys(text)
 
-    def del_first_from_home_page(self):
+#def del_first_from_home_page(self):
+
+    def del_random_from_home_page(self, index):
         wd = self.app.wd
         self.app.open_home_page()
         # Select contact
-        wd.find_element_by_name("selected[]").click()
+        wd.find_elements_by_name("selected[]")[index].click()
         # Delete selected contact
         wd.find_element_by_xpath("//input[@value='Delete']").click()
         # self.app.assertRegexpMatches(self.app.close_alert_and_get_its_text(), r"^Delete 1 addresses[\s\S]$")

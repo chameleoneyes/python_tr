@@ -19,9 +19,12 @@ class GroupHelper:
         self.group_cache = None
 
     def edit_first(self, new_group_param):
+        self.edit_random(new_group_param, 0)
+
+    def edit_random(self, new_group_param, index):
         wd = self.app.wd
         self.open_page_group()
-        self.select_first_group()
+        self.select_group_by_index(index)
         # Edit selected group
         wd.find_element_by_name("edit").click()
         self.fill_group_form(new_group_param)
@@ -31,9 +34,12 @@ class GroupHelper:
         self.group_cache = None
 
     def del_first(self):
+        self.del_random(0)
+
+    def del_random(self, index):
         wd = self.app.wd
         self.open_page_group()
-        self.select_first_group()
+        self.select_group_by_index(index)
         # Delete selected group
         wd.find_element_by_name("delete").click()
         self.return_page_group()
@@ -63,9 +69,9 @@ class GroupHelper:
         # for delay
         wd.find_element_by_name("new")
 
-    def select_first_group(self):
+    def select_group_by_index(self, index):
         wd = self.app.wd
-        wd.find_element_by_name("selected[]").click()
+        wd.find_elements_by_name("selected[]")[index].click()
 
     def count(self):
         wd = self.app.wd
