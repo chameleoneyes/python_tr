@@ -9,11 +9,11 @@ def test_del_first_contact_hp(app):
     old_contacts = app.contact.get_contact_list()
     app.contact.del_first_from_home_page()
     time.sleep(2)       # for 1 assert
-    new_contacts = app.contact.get_contact_list()
 # Diagnostic output
 #    for i in range(len(new_contacts)):
 #        print(str(new_contacts[i].id) + " : " + str(new_contacts[i].firstname))
-    assert len(old_contacts) - 1 == len(new_contacts)
+    assert len(old_contacts) - 1 == app.contact.count()
+    new_contacts = app.contact.get_contact_list()
     old_contacts[0:1] = []
     assert old_contacts == new_contacts
 
