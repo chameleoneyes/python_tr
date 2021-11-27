@@ -87,9 +87,55 @@ class ContactHelper:
             self.app.open_home_page()
             self.contact_cache = []
             for elements in wd.find_elements_by_name("entry"):
+                cells = elements.find_elements_by_tag_name("td")
+                id = elements.find_element_by_name("selected[]").get_attribute("value")
+                firstname = cells[2].text
+                lastname = cells[1].text
+                addr = cells[3].text
+                all_phones = cells[5].text
+                all_emails = cells[4].text
+                self.contact_cache.append(Contact(id=id, firstname=firstname, lastname=lastname, addr=addr,
+                                                  all_phones=all_phones, all_emails=all_emails))
+        return list(self.contact_cache)
+
+    def open_contact_to_edit(self, index):
+        wd = self.app.wd
+        self.app.open_home_page()
+        row = wd.find_elements_by_name("entry")[index]
+        cell = row.find_elements_by_tag_name("td")[7]
+        cell.find_element_by_tag_name("a").click()
+
+    def get_contact_from_edit_page(self, index):
+        wd = self.app.wd
+        self.app.open_home_page()
+        self.open_contact_to_edit(index)
+        id = wd.find_element_by_name("id").get_attribute("value")
+        firstname = wd.find_element_by_name("firstname").get_attribute("value")
+        lastname = wd.find_element_by_name("lastname").get_attribute("value")
+        address = wd.find_element_by_name("address").get_attribute("value")
+        homephone = wd.find_element_by_name("home").get_attribute("value")
+        mobile = wd.find_element_by_name("mobile").get_attribute("value")
+        workphone = wd.find_element_by_name("work").get_attribute("value")
+        phone2 = wd.find_element_by_name("phone2").get_attribute("value")
+        email1 = wd.find_element_by_name("email").get_attribute("value")
+        email2 = wd.find_element_by_name("email2").get_attribute("value")
+        email3 = wd.find_element_by_name("email3").get_attribute("value")
+        return Contact(firstname=firstname, lastname=lastname, addr=address, id=id,
+                       homephone=homephone, mobile=mobile, workphone=workphone, phone2=phone2,
+                       email1=email1, email2=email2, email3=email3)
+
+
+'''
+   def get_contact_list(self):
+        if self.contact_cache is None:
+            wd = self.app.wd
+            self.app.open_home_page()
+            self.contact_cache = []
+            for elements in wd.find_elements_by_name("entry"):
                 id = elements.find_element_by_name("selected[]").get_attribute("value")
                 firstname = elements.find_element_by_xpath(".//td[3]").text
                 lastname = elements.find_element_by_xpath(".//td[2]").text
                 addr = elements.find_element_by_xpath(".//td[4]").text
                 self.contact_cache.append(Contact(id=id, firstname=firstname, lastname=lastname, addr=addr))
         return list(self.contact_cache)
+'''
