@@ -1,7 +1,7 @@
 import re
 
 
-def test_compare_contact_views(app, index=0):
+def test_compare_contact_views(app, index=1):
     contact_from_hp = app.contact.get_contact_list()[index]
     contact_from_ep = app.contact.get_contact_from_edit_page(index)
     assert contact_from_hp.firstname == contact_from_ep.firstname
