@@ -6,17 +6,26 @@ from Fixture.contact import ContactHelper
 
 class Application:
 
-    def __init__(self):
-        self.wd = webdriver.Firefox()
+    def __init__(self, browser, url):
+        if browser == "firefox":
+            self.wd = webdriver.Firefox()
+        elif browser == "chrome":
+            self.wd = webdriver.Chrome()
+# Edge doesn't work
+        elif browser == "ie":
+            self.wd = webdriver.Edge()
+        else:
+            raise ValueError("Unrecognized Browser %s" % browser)
 #        self.wd.implicitly_wait(10)
         self.session = SessionHelper(self)
         self.group = GroupHelper(self)
         self.contact = ContactHelper(self)
+        self.url = url
 
     def open_home_page(self):
         wd = self.wd
-        if wd.current_url != "http://localhost/addressbook/":
-            wd.get("http://localhost/addressbook/")
+        if wd.current_url != self.url:
+            wd.get(self.url)
 
     def is_valid(self):
         try:
