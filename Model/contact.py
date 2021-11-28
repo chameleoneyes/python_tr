@@ -21,7 +21,7 @@ class Contact:
         self.all_emails = all_emails
 
     def __repr__(self):
-        return "%s:%s" % (self.id, self.firstname)
+        return "%s:%s;%s;%s,%s" % (self.id, self.firstname, self.lastname, self.mobile, self.email1)
 
     def __eq__(self, other):
         return ((self.id is None or other.id is None or self.id == other.id) and (self.firstname == other.firstname or
