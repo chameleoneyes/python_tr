@@ -1,5 +1,15 @@
 {
-  "testUrl": "http://localhost/addressbook/",
-  "username": "admin",
-  "password": "secret"
+  "web":
+  {
+     "testUrl": "http://localhost/addressbook/",
+     "username": "admin",
+     "password": "secret"
+  },
+  "db":
+  {
+    "host": "localhost",
+    "name": "addressbook",
+    "user": "root",
+    "password": ""
+  }
 }
