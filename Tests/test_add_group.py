@@ -2,27 +2,14 @@
 
 from Model.group import Group
 import pytest
-import random
-import string
-import re
+from data.groups import tdata
 
 
-def random_string(prefix, maxlen):
-    symbols = string.ascii_letters + string.digits + " "*10
-    s = "".join([random.choice(symbols) for i in range(random.randrange(maxlen))])
-    s = s.strip()
-    s = re.sub('\s+',' ', s)
-    return prefix + s
+# @pytest.mark.parametrize("group", tdata, ids=[repr(x) for x in tdata])
 
 
-tdata = [Group(gname="", gheader="", gfooter="")] + [
-    Group(gname=random_string("name", 10), gheader=random_string("header", 5), gfooter=random_string("footer", 8))
-    for i in range(5)
-]
-
-
-@pytest.mark.parametrize("group", tdata, ids=[repr(x) for x in tdata])
-def test_add_group(app, group):
+def test_add_group(app, json_groups):
+    group = json_groups
     old_groups = app.group.get_group_list()
     app.group.create(group)
     assert len(old_groups) + 1 == app.group.count()
