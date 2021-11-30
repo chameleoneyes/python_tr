@@ -1,7 +1,7 @@
 import re
 
 
-def test_compare_contact_views(app, index=1):
+def test_compare_contact_views(app, index=4):
     contact_from_hp = app.contact.get_contact_list()[index]
     contact_from_ep = app.contact.get_contact_from_edit_page(index)
     assert contact_from_hp.firstname == contact_from_ep.firstname
@@ -23,6 +23,5 @@ def merge_phones(contact):
 
 
 def merge_emails(contact):
-    return "\n".join(filter(lambda x: x != "", map(lambda x: clear(x),
-                                                   filter(lambda x: x is not None,
-                                                          [contact.email1, contact.email2, contact.email3]))))
+    return "\n".join(filter(lambda x: x != "", filter(lambda x: x is not None,
+                                                          [contact.email1, contact.email2, contact.email3])))
