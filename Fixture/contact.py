@@ -27,7 +27,6 @@ class ContactHelper:
         self.contact_cache = None
 
     def fill_contact_form(self, contact):
-        wd = self.app.wd
         self.change_field_value("firstname", contact.firstname)
         self.change_field_value("lastname", contact.lastname)
         self.change_field_value("company", contact.company)
@@ -130,6 +129,35 @@ class ContactHelper:
         return Contact(firstname=firstname, lastname=lastname, addr=address, id=id,
                        homephone=homephone, mobile=mobile, workphone=workphone, phone2=phone2,
                        email1=email1, email2=email2, email3=email3)
+
+    def delete_contact_by_id_from_hp(self, id):
+        wd = self.app.wd
+        self.app.open_home_page()
+        # Select contact
+        wd.find_element_by_css_selector("input[value='%s']" % id).click()
+        # Delete selected contact
+        wd.find_element_by_xpath("//input[@value='Delete']").click()
+        # self.app.assertRegexpMatches(self.app.close_alert_and_get_its_text(), r"^Delete 1 addresses[\s\S]$")
+        wd.switch_to_alert().accept()
+        self.app.open_home_page()
+        self.contact_cache = None
+
+    def edit_contact_by_id(self, new_contact_params, id):
+        wd = self.app.wd
+        self.app.open_home_page()
+        # Select contact
+        index = 0
+        for elements in wd.find_elements_by_name("entry"):
+            if elements.find_element_by_name("selected[]").get_attribute("value") != str(id):
+                index = index + 1
+            else:
+                break
+        # Edit selected contact
+        wd.find_elements_by_xpath("//img[@alt='Edit']")[index].click()
+        self.fill_contact_form(new_contact_params)
+        wd.find_element_by_name("update").click()
+        wd.find_element_by_link_text("home page").click()
+        self.contact_cache = None
 
 
 '''
