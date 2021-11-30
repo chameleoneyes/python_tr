@@ -33,6 +33,18 @@ class GroupHelper:
         self.return_page_group()
         self.group_cache = None
 
+    def edit_group_by_id(self, new_group_param, id):
+        wd = self.app.wd
+        self.open_page_group()
+        self.select_group_by_id(id)
+        # Edit selected group
+        wd.find_element_by_name("edit").click()
+        self.fill_group_form(new_group_param)
+        wd.find_element_by_name("update").click()
+        # check
+        self.return_page_group()
+        self.group_cache = None
+
     def del_first(self):
         self.del_random(0)
 
@@ -90,3 +102,16 @@ class GroupHelper:
                 id = elements.find_element_by_name("selected[]").get_attribute("value")
                 self.group_cache.append(Group(gname=text, gid=id))
         return list(self.group_cache)
+
+    def del_group_by_id(self, id):
+        wd = self.app.wd
+        self.open_page_group()
+        self.select_group_by_id(id)
+        # Delete selected group
+        wd.find_element_by_name("delete").click()
+        self.return_page_group()
+        self.group_cache = None
+
+    def select_group_by_id(self, id):
+        wd = self.app.wd
+        wd.find_element_by_css_selector("input[value='%s']" % id).click()
