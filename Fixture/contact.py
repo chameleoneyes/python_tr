@@ -1,4 +1,5 @@
 from Model.contact import Contact
+from selenium.webdriver.support.ui import Select
 
 
 class ContactHelper:
@@ -146,18 +147,36 @@ class ContactHelper:
         wd = self.app.wd
         self.app.open_home_page()
         # Select contact
-        index = 0
-        for elements in wd.find_elements_by_name("entry"):
-            if elements.find_element_by_name("selected[]").get_attribute("value") != str(id):
-                index = index + 1
-            else:
-                break
+        index = self.find_contact_index_by_id(id)
         # Edit selected contact
         wd.find_elements_by_xpath("//img[@alt='Edit']")[index].click()
         self.fill_contact_form(new_contact_params)
         wd.find_element_by_name("update").click()
         wd.find_element_by_link_text("home page").click()
         self.contact_cache = None
+
+    def find_contact_index_by_id(self, id):
+        wd = self.app.wd
+        index = 0
+        for elements in wd.find_elements_by_name("entry"):
+            if elements.find_element_by_name("selected[]").get_attribute("value") != str(id):
+                index = index + 1
+            else:
+                break
+        return index
+
+    def put_contact_to_group(self, contact_id, group_id):
+        wd = self.app.wd
+        index = self.find_contact_index_by_id(contact_id)
+        wd.find_elements_by_name("selected[]")[index].click()
+        wd.find_element_by_name("to_group").click()
+        Select(wd.find_element_by_name("to_group")).select_by_value(group_id)
+       # wd.find_element_by_xpath("//div[@id='content']/form[2]/div[4]/select/option[3]").click()
+        wd.find_element_by_name("add").click()
+
+     #   wd.find_element_by_xpath("//select[@name='to_group']").send_key(str(group_id)).submit()
+     #   wd.find_element_by_xpath("//input[@value='Add to']").click()
+
 
 
 '''
