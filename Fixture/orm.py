@@ -22,6 +22,14 @@ class ORMfixture:
         firstname = Optional(str, column='firstname')
         lastname = Optional(str, column='lastname')
         deprecated = Optional(datetime, column='deprecated')
+        addr = Optional(str, column='address')
+        homephone = Optional(str, column='home')
+        mobile = Optional(str, column='mobile')
+        workphone = Optional(str, column='work')
+        phone2 = Optional(str, column='phone2')
+        email1 = Optional(str, column='email')
+        email2 = Optional(str, column='email2')
+        email3 = Optional(str, column='email3')
         groups = Set(lambda: ORMfixture.ORMgroup, table='address_in_groups', column='group_id', reverse='contacts', lazy=True)
 
     def __init__(self, host, name, user, pwd):
@@ -36,7 +44,9 @@ class ORMfixture:
 
     def convert_contacts(self, contacts):
         def convert(contact):
-            return Contact(id=str(contact.id), firstname=contact.firstname, lastname=contact.lastname)
+            return Contact(id=str(contact.id), firstname=contact.firstname, lastname=contact.lastname, addr=contact.addr,
+                           homephone=contact.homephone, mobile=contact.mobile, workphone=contact.workphone, phone2=contact.phone2,
+                           email1=contact.email1, email2=contact.email2, email3=contact.email3)
         return list(map(convert, contacts))
 
     @db_session

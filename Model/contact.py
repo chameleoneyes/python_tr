@@ -21,12 +21,14 @@ class Contact:
         self.all_emails = all_emails
 
     def __repr__(self):
-        return "%s:%s;%s;%s,%s" % (self.id, self.firstname, self.lastname, self.mobile, self.email1)
+        return "%s:%s;%s;%s,%s" % (self.id, self.firstname, self.lastname, self.all_phones, self.all_emails)
 
     def __eq__(self, other):
         return ((self.id is None or other.id is None or self.id == other.id) and (self.firstname == other.firstname or
                 self.firstname is None or other.firstname is None) and (self.lastname == other.lastname or self.lastname
-                is None or other.lastname is None) and (self.addr == other.addr or self.addr is None or other.addr is None))
+                is None or other.lastname is None) and (self.addr == other.addr or self.addr is None or other.addr is None)
+                and (self.all_phones is None or other.all_phones is None or self.all_phones == other.all_phones)
+                and (self.all_emails is None or other.all_emails is None or self.all_emails == other.all_emails))
 
     def con_id_fill(self):
         if self.id:

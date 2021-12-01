@@ -12,7 +12,7 @@ db = ORMfixture(host="127.0.0.1", name="addressbook", user="root", pwd="")
         print(row)
         '''
 try:
-    list = db.get_contacts_not_in_group(Group(gid='83'))
+    list = db.get_contact_list()
     for item in list:
         print(item)
     print(len(list))
