@@ -171,11 +171,17 @@ class ContactHelper:
         wd.find_elements_by_name("selected[]")[index].click()
         wd.find_element_by_name("to_group").click()
         Select(wd.find_element_by_name("to_group")).select_by_value(group_id)
-       # wd.find_element_by_xpath("//div[@id='content']/form[2]/div[4]/select/option[3]").click()
         wd.find_element_by_name("add").click()
+        self.app.open_home_page()
 
-     #   wd.find_element_by_xpath("//select[@name='to_group']").send_key(str(group_id)).submit()
-     #   wd.find_element_by_xpath("//input[@value='Add to']").click()
+    def delete_contact_from_group(self, group_id, contact_id):
+        wd = self.app.wd
+        wd.find_element_by_name("group").click()
+        Select(wd.find_element_by_name("group")).select_by_value(group_id)
+        index = self.find_contact_index_by_id(contact_id)
+        wd.find_elements_by_name("selected[]")[index].click()
+        wd.find_element_by_name("remove").click()
+        self.app.open_home_page()
 
 
 

@@ -69,3 +69,16 @@ class ORMfixture:
         orm_group = list(select(gr for gr in ORMfixture.ORMgroup if gr.id == group.id))[0]
         return self.convert_contacts(
             select(con for con in ORMfixture.ORMcontact if con.deprecated is None and orm_group not in con.groups))
+
+    @db_session
+    def get_group_contains_contact(self, contact):
+        orm_contact = list(select(con for con in ORMfixture.ORMcontact if con.deprecated is None and con.id == contact.id))
+        return self.convert_groups(
+            select(gr for gr in ORMfixture.ORMgroup if orm_contact in gr.contacts))
+
+    @db_session
+    def get_contact_deleted_from_group(self, group):
+        contact = Contact()
+        contact.id = (self.db.execute
+                        ("select id from address_in_groups where group_id=%s and deprecated is NULL" % group.id))
+        return contact

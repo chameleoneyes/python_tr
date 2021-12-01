@@ -1,4 +1,3 @@
-from Model.contact import Contact
 from Fixture.orm import ORMfixture
 import random
 from Fixture.contact import Contact
