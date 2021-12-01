@@ -1,8 +1,9 @@
 #import mysql.connector
 #import pymysql.cursors
-from Fixture.db import DBfixture
+from Fixture.orm import ORMfixture
+from Model.group import Group
 
-db = DBfixture(host="127.0.0.1", name="addressbook", user="root", password="")
+db = ORMfixture(host="127.0.0.1", name="addressbook", user="root", pwd="")
 
 '''try:
     cursor = connection.cursor()
@@ -11,9 +12,9 @@ db = DBfixture(host="127.0.0.1", name="addressbook", user="root", password="")
         print(row)
         '''
 try:
-    groups = db.get_group_list()
-    for group in groups:
-        print(group)
-    print(len(groups))
+    list = db.get_contacts_not_in_group(Group(gid='83'))
+    for item in list:
+        print(item)
+    print(len(list))
 finally:
-    db.destroy()
+    pass #  db.destroy()

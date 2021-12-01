@@ -3,6 +3,7 @@ import time
 import random
 
 
+
 # Delete contact from home page with Delete Button
 def test_del_random_contact_hp(app, db, check_ui):
     if app.contact.count() == 0:
