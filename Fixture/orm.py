@@ -82,3 +82,11 @@ class ORMfixture:
         contact.id = (self.db.execute
                         ("select id from address_in_groups where group_id=%s and deprecated is NULL" % group.id))
         return contact
+
+    def assertion(self, group, contact_for_edit):
+        contacts_in_group = self.get_contacts_in_group(group)
+        i = False
+        for contact in contacts_in_group:
+            if contact == contact_for_edit:
+                i = True
+        return i

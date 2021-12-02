@@ -2,6 +2,7 @@ from selenium import webdriver
 from Fixture.session import SessionHelper
 from Fixture.group import GroupHelper
 from Fixture.contact import ContactHelper
+from Fixture.orm import ORMfixture
 
 
 class Application:
@@ -21,6 +22,7 @@ class Application:
         self.group = GroupHelper(self)
         self.contact = ContactHelper(self)
         self.url = url
+        self.orm = ORMfixture
 
     def open_home_page(self):
         wd = self.wd
